@@ -246,6 +246,18 @@
   :root[data-theme="dark"] .acct.hp{background:#3a2f16;color:#f0c36d}
   @media (prefers-color-scheme:dark){ :root:not([data-theme="light"]) .acct.hp{background:#3a2f16;color:#f0c36d} }
   .prod-acct{margin-left:8px}
+  .dly-tb{width:100%;border-collapse:collapse;font-size:13.5px}
+  .dly-tb th,.dly-tb td{padding:9px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+  .dly-tb th:first-child,.dly-tb td:first-child{text-align:left}
+  .dly-tb thead th{position:sticky;top:0;background:var(--card);color:var(--muted);font-size:11.5px;font-weight:700;z-index:1}
+  .dly-tb tbody tr:hover{background:var(--hover,rgba(127,140,175,.07))}
+  .dly-tb tfoot td{font-weight:800;border-top:2px solid var(--line);border-bottom:none}
+  .dly-ad{color:#5b7cfa;font-weight:700} .dly-tl{color:#2fbf8f;font-weight:700}
+  .dly-sun td{opacity:.62}
+  .dly-wrap{max-height:620px;overflow:auto;border-radius:12px}
+  .dly-lg{display:flex;gap:18px;font-size:12.5px;color:var(--muted);margin-top:10px;flex-wrap:wrap}
+  .dly-dot{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  @media print{.sidebar,.ov-head-actions,#dlyPrint{display:none!important}.main{margin:0!important}.dly-wrap{max-height:none;overflow:visible}}
   .monthbox{margin:14px 12px 4px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}
   .monthlbl{font-size:11px;letter-spacing:.04em;color:var(--muted);margin-bottom:6px;text-transform:uppercase}
   .monthbox select{width:100%;font-family:inherit;font-size:14px;font-weight:700;padding:7px 9px;border-radius:9px;border:1px solid var(--line);background:var(--bg);color:var(--ink);cursor:pointer}
@@ -467,7 +479,7 @@
       <button class="menu-item" data-view="product"><span class="mi">📦</span><span>รายงานสินค้า</span></button>
       <button class="menu-item" data-view="catalog"><span class="mi">🏷️</span><span>สินค้า / ต้นทุน</span></button>
       <button class="menu-item" data-view="tls"><span class="mi">📞</span><span>เทเลเซลส์ (TLS)</span></button>
-      <button class="menu-item" data-view="daily"><span class="mi">📅</span><span>รายงานรายวัน</span><span class="badge">เร็วๆ นี้</span></button>
+      <button class="menu-item" data-view="daily"><span class="mi">📅</span><span>รายงานรายวัน</span></button>
       <button class="menu-item" data-view="ads"><span class="mi">📣</span><span>ค่าแอด</span></button>
     </nav>
     <div class="monthbox"><div class="monthlbl">เดือนที่ดู</div><select id="monthSel"></select></div>
@@ -659,7 +671,22 @@
       <div class="head"><div><h1 class="h1">เทเลเซลส์ (TLS)</h1><p class="sub">ยอดขายเทเล/โทรอัพ · แยกจากช่องทางแอดมิน</p></div></div>
       <div id="tlsBody"></div>
     </section>
-    <section class="page" id="page-daily"><div class="stub"><div class="big">📅</div><h2>รายงานรายวัน</h2><p class="muted">รอรูปต้นฉบับเพื่อสร้างหน้านี้ให้เหมือน</p></div></section>
+    <section class="page" id="page-daily">
+      <div class="head">
+        <div><h1 class="h1">📅 รายงานรายวัน แยกช่องทาง</h1><p class="sub">กำไรแอดมิน เทียบ กำไรเทเลเซลส์ ทีละวัน</p></div>
+        <div class="ov-head-actions">
+          <div class="segbtns" id="dlyQuick">
+            <button data-q="all" class="active">ทั้งเดือน</button>
+            <button data-q="7">7 วันล่าสุด</button>
+            <button data-q="14">14 วันล่าสุด</button>
+            <button data-q="1">วันล่าสุด</button>
+          </div>
+          <div class="daterange">🗓️ <input type="date" id="dlyFrom" class="dinp"> <span class="dsep">ถึง</span> <input type="date" id="dlyTo" class="dinp"></div>
+          <button class="themebtn" id="dlyPrint" style="margin:0">🖨️ พิมพ์ / PDF</button>
+        </div>
+      </div>
+      <div id="dailyBody"></div>
+    </section>
     <section class="page" id="page-ads">
       <div class="head">
         <div><h1 class="h1">📣 ค่าแอด</h1><p class="sub">ดูค่าแอดรายวัน แยกตามสินค้า พร้อม %แอดต่อยอดขายและ ROAS</p></div>
@@ -1002,117 +1029,181 @@ const TELE_DATA = {
   },
   {
    "date": "2026-08-21",
-   "so": 32418,
-   "se": 18500,
-   "st": 50918,
-   "profit": 33169.11,
-   "pct": 65.14
+   "so": null,
+   "se": null,
+   "st": 53209,
+   "profit": 34400.18,
+   "pct": 64.65
   },
   {
    "date": "2026-08-22",
-   "so": 45028,
-   "se": 18300,
-   "st": 63328,
-   "profit": 42286.78,
-   "pct": 66.77
+   "so": null,
+   "se": null,
+   "st": 66021,
+   "profit": 43756.99,
+   "pct": 66.28
+  },
+  {
+   "date": "2026-08-23",
+   "so": null,
+   "se": null,
+   "st": 4476,
+   "profit": 2982.72,
+   "pct": 66.64
   },
   {
    "date": "2026-08-24",
-   "so": 39105,
-   "se": 21309,
-   "st": 60414,
-   "profit": 38931.58,
-   "pct": 64.44
+   "so": null,
+   "se": null,
+   "st": 64311,
+   "profit": 41323.67,
+   "pct": 64.26
+  },
+  {
+   "date": "2026-08-25",
+   "so": null,
+   "se": null,
+   "st": 65395,
+   "profit": 42339.75,
+   "pct": 64.74
+  },
+  {
+   "date": "2026-08-26",
+   "so": null,
+   "se": null,
+   "st": 50473,
+   "profit": 32351.19,
+   "pct": 64.1
+  },
+  {
+   "date": "2026-08-27",
+   "so": null,
+   "se": null,
+   "st": 56198,
+   "profit": 37354.03,
+   "pct": 66.47
+  },
+  {
+   "date": "2026-08-28",
+   "so": null,
+   "se": null,
+   "st": 61470,
+   "profit": 39778.81,
+   "pct": 64.71
+  },
+  {
+   "date": "2026-08-29",
+   "so": null,
+   "se": null,
+   "st": 57964,
+   "profit": 38611.24,
+   "pct": 66.61
+  },
+  {
+   "date": "2026-08-30",
+   "so": null,
+   "se": null,
+   "st": 13116,
+   "profit": 7956.52,
+   "pct": 60.66
+  },
+  {
+   "date": "2026-08-31",
+   "so": null,
+   "se": null,
+   "st": 72499,
+   "profit": 48167.71,
+   "pct": 66.44
   }
  ],
  "persons": [
   {
    "name": "พี่น้ำ",
    "orders": 273,
-   "comm": 2847.45,
+   "comm": 9979.4,
    "carry": 8450,
-   "salesAug": 86465,
-   "allSales": 94915
+   "salesAug": 191138,
+   "allSales": 199588
   },
   {
    "name": "พี่ฟิล์ม",
    "orders": 170,
-   "comm": 2799.54,
+   "comm": 9548.55,
    "carry": 9120,
-   "salesAug": 84198,
-   "allSales": 93318
+   "salesAug": 181851,
+   "allSales": 190971
   },
   {
    "name": "มายด์",
    "orders": 373,
-   "comm": 2289.27,
+   "comm": 8362.15,
    "carry": 5517,
-   "salesAug": 70792,
-   "allSales": 76309
-  },
-  {
-   "name": "พี่เอ้",
-   "orders": 85,
-   "comm": 2006.85,
-   "carry": 4221,
-   "salesAug": 62674,
-   "allSales": 66895
+   "salesAug": 161726,
+   "allSales": 167243
   },
   {
    "name": "พี่ปอ",
    "orders": 59,
-   "comm": 1298.9,
+   "comm": 7947.4,
    "carry": 5028,
-   "salesAug": 59917,
-   "allSales": 64945
+   "salesAug": 153920,
+   "allSales": 158948
   },
   {
-   "name": "แป้ง",
-   "orders": 335,
-   "comm": 1011.48,
-   "carry": 0,
-   "salesAug": 50574,
-   "allSales": 50574
-  },
-  {
-   "name": "พี่มิ้ว",
-   "orders": 425,
-   "comm": 1050.04,
-   "carry": 4300,
-   "salesAug": 48202,
-   "allSales": 52502
+   "name": "พี่เอ้",
+   "orders": 85,
+   "comm": 7813.35,
+   "carry": 4221,
+   "salesAug": 152046,
+   "allSales": 156267
   },
   {
    "name": "พี่ออย",
    "orders": 101,
-   "comm": 1034.45,
+   "comm": 5218.56,
    "carry": 4058,
-   "salesAug": 47662,
-   "allSales": 51720
+   "salesAug": 126406,
+   "allSales": 130464
+  },
+  {
+   "name": "พี่มิ้ว",
+   "orders": 425,
+   "comm": 5019.08,
+   "carry": 4300,
+   "salesAug": 121177,
+   "allSales": 125477
+  },
+  {
+   "name": "แป้ง",
+   "orders": 335,
+   "comm": 4824.92,
+   "carry": 0,
+   "salesAug": 120623,
+   "allSales": 120623
   },
   {
    "name": "พี่เจน",
    "orders": 56,
-   "comm": 947.06,
+   "comm": 3206.46,
    "carry": 5200,
-   "salesAug": 42153,
-   "allSales": 47353
+   "salesAug": 101682,
+   "allSales": 106882
   },
   {
-   "name": "พี่ฟิมสูง",
-   "orders": 54,
-   "comm": 810.1,
-   "carry": 4003,
-   "salesAug": 36502,
-   "allSales": 40505
+   "name": "พี่ฟิมกังสดาล",
+   "orders": 0,
+   "comm": 2635.68,
+   "carry": 0,
+   "salesAug": 87856,
+   "allSales": 87856
   },
   {
    "name": "เนย",
    "orders": 24,
-   "comm": 686.4,
+   "comm": 2245.2,
    "carry": 3636,
-   "salesAug": 30684,
-   "allSales": 34320
+   "salesAug": 71204,
+   "allSales": 74840
   },
   {
    "name": "พี่จ๋า",
@@ -1121,22 +1212,6 @@ const TELE_DATA = {
    "carry": 6566,
    "salesAug": 18294,
    "allSales": 24860
-  },
-  {
-   "name": "พี่ฟิล์มเล็ก",
-   "orders": 52,
-   "comm": null,
-   "carry": null,
-   "salesAug": null,
-   "allSales": null
-  },
-  {
-   "name": "พี่ฟิม",
-   "orders": 19,
-   "comm": null,
-   "carry": null,
-   "salesAug": null,
-   "allSales": null
   }
  ],
  "products": [
@@ -1462,16 +1537,16 @@ const TELE_DATA = {
  "combinedProfit": 127587.9,
  "target": 1000000,
  "total": {
-  "so": 728809,
-  "se": 365009,
-  "st": 1093818,
-  "profit": 716867.6
+  "so": 612258,
+  "se": 306900,
+  "st": 1484290,
+  "profit": 971502.94
  },
  "personTotal": {
-  "comm": 17278.69,
-  "carry": 60099,
-  "salesAug": 638117,
-  "all": 698216
+  "comm": 67297.95,
+  "carry": 56096,
+  "salesAug": 1487923,
+  "all": 1544019
  }
 };
 const AD_DATA = {
@@ -4915,6 +4990,24 @@ function rangeWindow(kind){
   return {start,end};
 }
 function daysIn(start,end){ return DAYS.filter(d=>d.date>=start&&d.date<=end).slice().sort((a,b)=>a.date<b.date?-1:1); }
+function teleIn(days){
+  const o = {sales:0, profit:0, n:0, orders:0, exSales:0, exProfit:0, exPieces:0, full:false, hasOrders:false};
+  if(typeof TELE_DATA==="undefined" || !TELE_DATA.days) return o;
+  const set = new Set(days.map(d=>d.date));
+  TELE_DATA.days.forEach(x=>{ if(set.has(x.date)){ o.sales += x.st||0; o.profit += x.profit||0; o.n++; } });
+  o.full = days.length>0 && days.length===DAYS.length;      // เลือกครบทั้งเดือน
+  if(o.full){
+    o.hasOrders = true;
+    o.orders = (TELE_DATA.persons||[]).reduce((a,p)=>a+(p.orders||0),0);
+    const ex = TELE_DATA.exchange||[];
+    o.exSales  = ex.reduce((a,x)=>a+(x.sales||0),0);
+    o.exProfit = ex.reduce((a,x)=>a+(x.profit||0),0);
+    o.exPieces = ex.reduce((a,x)=>a+(x.pieces||0),0);
+  }
+  return o;
+}
+/* โหมดรวมทุกช่องทาง = ไม่ได้กรองช่องทาง/สินค้า/หมวด */
+function combinedMode(){ return !ovChan && !ovProd && !ovCatSel; }
 function passFilter(code){ if(ovProd&&code!==ovProd)return false; if(ovCatSel&&metaOf(code).cat!==ovCatSel)return false; return true; }
 function aggregate(days){
   let sales=0,orders=0,pieces=0,net=0; const skus=new Set();
@@ -4940,7 +5033,7 @@ function renderOverview(){
   const ps=new Date(pe); ps.setDate(ps.getDate()-(len-1));
   const prev=aggregate(daysIn(isoOf(ps),isoOf(pe)));
 
-  renderOvKpis(cur,prev);
+  renderOvKpis(cur,prev,days);
   renderGoal();
   renderTrend(days);
   renderTop(days);
@@ -4979,20 +5072,36 @@ function goalStats() {
   return { fb, tele, exch, gross, tgTotal, tg, fixed, net: gross - fixed, prog: tgTotal ? gross / tgTotal : 0 };
 }
 
-function renderOvKpis(cur, prev) {
+function renderOvKpis(cur, prev, days) {
   const g = goalStats();
+  const t = (combinedMode() && days) ? teleIn(days) : null;
+  const comb = !!(t && (t.sales || t.profit));
   const chip = g.net < 0 ? '<span class="badge bad">ต่ำกว่าเป้า</span>' : '<span class="badge ok">ถึงเป้าแล้ว</span>';
   const bar = (p, cls) => '<div class="kbar"><div class="kbar-f' + (cls ? " " + cls : "") + '" style="width:' + Math.max(0, Math.min(100, p * 100)).toFixed(1) + '%"></div></div>';
+  const allSales  = comb ? cur.sales + t.sales + t.exSales : cur.sales;
+  const allOrders = comb ? cur.orders + t.orders : cur.orders;
+  const allPieces = comb ? cur.pieces + t.exPieces : cur.pieces;
+  /* กำไรฝั่งแอดมินใช้ computeDay เหมือนบล็อกสรุปเดือน (รวมค่าแอดของสินค้าที่วันนั้นไม่มียอดขาย) */
+  const adNet = comb ? days.reduce((a,d)=>a+computeDay(d).net,0) : cur.net;
+  const allNet    = comb ? adNet + t.profit + t.exProfit : cur.net;
+  const split = comb
+    ? '<div class="kmeta"><span>แอดมิน <b>' + baht(cur.sales) + '</b></span><span>เทเล <b>' + baht(t.sales + t.exSales) + '</b></span></div>'
+    : '<div class="kmeta"><span>AOV <b>' + baht(cur.aov) + '</b></span><span>SKU <b>' + num(cur.sku) + '</b></span></div>';
+  const ordFoot = comb
+    ? (t.hasOrders
+        ? '<div class="kmeta"><span>แอดมิน <b>' + num(cur.orders) + '</b></span><span>เทเล <b>' + num(t.orders) + '</b></span></div>'
+        : '<div class="kmeta"><span class="note">เฉพาะแอดมิน — ชีทเทเลไม่มีออเดอร์รายวัน</span></div>')
+    : "";
   const cards = [
-    { ic: "🛒", g: "g1", lbl: "ยอดขายรวม", val: baht(cur.sales), d: delta(cur.sales, prev.sales),
-      extra: '<div class="kmeta"><span>AOV <b>' + baht(cur.aov) + '</b></span><span>SKU <b>' + num(cur.sku) + '</b></span></div>' },
-    { ic: "🧾", g: "g2", lbl: "ออเดอร์", val: num(cur.orders), d: delta(cur.orders, prev.orders) },
-    { ic: "📦", g: "g3", lbl: "จำนวนชิ้น", val: num(cur.pieces), d: delta(cur.pieces, prev.pieces) },
-    { ic: "📊", g: "g4", lbl: "กำไรรวมทุกช่องทาง", val: baht(g.gross), cls: g.gross < 0 ? "neg2" : "pos",
-      extra: bar(g.prog) + '<div class="kmeta"><span class="accent"><b>' + pct(g.prog) + '</b> ของเป้า</span></div>' +
-        '<div class="kmeta"><span>Margin <b>' + pct(cur.sales ? cur.net / cur.sales : 0) + '</b></span><span>เป้า <b>' + baht(g.tgTotal) + '</b></span></div>' },
+    { ic: "🛒", g: "g1", lbl: comb ? "ยอดขายรวมทุกช่องทาง" : "ยอดขายรวม", val: baht(allSales), d: delta(cur.sales, prev.sales), extra: split },
+    { ic: "🧾", g: "g2", lbl: "ออเดอร์", val: num(allOrders), d: delta(cur.orders, prev.orders), extra: ordFoot },
+    { ic: "📦", g: "g3", lbl: "จำนวนชิ้น", val: num(allPieces), d: delta(cur.pieces, prev.pieces),
+      extra: comb && !t.hasOrders ? '<div class="kmeta"><span class="note">เฉพาะแอดมิน</span></div>' : "" },
+    { ic: "📊", g: "g4", lbl: comb ? "กำไรรวมทุกช่องทาง" : "กำไร (ช่องทางนี้)", val: baht(allNet), cls: allNet < 0 ? "neg2" : "pos",
+      extra: (comb ? '<div class="kmeta"><span>แอดมิน <b>' + baht(adNet) + '</b></span><span>เทเล <b>' + baht(t.profit + t.exProfit) + '</b></span></div>' : "") +
+        bar(g.prog) + '<div class="kmeta"><span class="accent"><b>' + pct(g.prog) + '</b> ของเป้าเดือน</span><span>Margin <b>' + pct(allSales ? allNet / allSales : 0) + '</b></span></div>' },
     { ic: "💰", g: "g6", lbl: "กำไรสุทธิหลังค่าใช้จ่าย", val: (g.net < 0 ? "−" + baht(-g.net) : baht(g.net)), cls: g.net < 0 ? "neg2" : "pos",
-      extra: '<div class="kmeta">' + chip + '<span class="note">หักคงที่ ' + baht(g.fixed) + '</span></div>' }
+      extra: '<div class="kmeta">' + chip + '<span class="note">ทั้งเดือน · หักคงที่ ' + baht(g.fixed) + '</span></div>' }
   ];
   $("#ovKpis").innerHTML = cards.map(k =>
     '<div class="kpi"><div class="ico ' + k.g + '">' + k.ic + '</div><div class="klbl">' + k.lbl + '</div>' +
@@ -5077,7 +5186,10 @@ function renderActions(days, cur) {
 function renderTrend(days) {
   const el = $("#ovTrend");
   if (!days.length) { el.innerHTML = '<div class="empty">ไม่มีข้อมูลในช่วงนี้</div>'; return; }
-  const pts = days.map(day => { const a = aggregate([day]); return { label: day.date, sales: a.sales, net: a.net, orders: a.orders }; });
+  const tMap = {};
+  if (combinedMode() && typeof TELE_DATA !== "undefined" && TELE_DATA.days) TELE_DATA.days.forEach(x => tMap[x.date] = x);
+  const pts = days.map(day => { const a = aggregate([day]); const tx = tMap[day.date];
+    return { label: day.date, sales: a.sales + (tx ? (tx.st||0) : 0), net: a.net + (tx ? (tx.profit||0) : 0), orders: a.orders }; });
   const key = ovMetric === "orders" ? "orders" : ovMetric === "net" ? "net" : "sales";
   const showNet = key === "sales";
   const w = 700, h = 280, pl = 62, pr = showNet ? 58 : 20, pt = 20, pb = 34;
@@ -5987,12 +6099,82 @@ function renderAds(){
 }
 
 /* ================= nav ================= */
+let dlyFrom = null, dlyTo = null;
+function dlyReset(){ dlyFrom = null; dlyTo = null; }
+function renderDaily(){
+  const el = $("#dailyBody"); if(!el) return;
+  const allD = DAYS.map(d=>d.date).sort();
+  if(!dlyFrom || !allD.includes(dlyFrom)) dlyFrom = allD[0];
+  if(!dlyTo   || !allD.includes(dlyTo))   dlyTo   = allD[allD.length-1];
+  if(dlyFrom > dlyTo){ const t=dlyFrom; dlyFrom=dlyTo; dlyTo=t; }
+  const fi=$("#dlyFrom"), ti=$("#dlyTo");
+  if(fi){ fi.min=ti.min=allD[0]; fi.max=ti.max=allD[allD.length-1]; fi.value=dlyFrom; ti.value=dlyTo; }
+  const tMap = {};
+  if(typeof TELE_DATA!=="undefined" && TELE_DATA.days) TELE_DATA.days.forEach(x=>tMap[x.date]=x);
+  const rows = DAYS.filter(d=>d.date>=dlyFrom && d.date<=dlyTo).sort((a,b)=>a.date<b.date?-1:1).map(d=>{
+    const c = computeDay(d), tx = tMap[d.date];
+    const tS = tx ? (tx.st||0) : 0, tP = tx ? (tx.profit||0) : 0;
+    return { date:d.date, adS:c.g.sales, adO:c.g.orders, adAd:c.ad, adP:c.net, tS:tS, tP:tP,
+             allS:c.g.sales+tS, allP:c.net+tP, sun:new Date(d.date+"T00:00:00").getDay()===0 };
+  });
+  if(!rows.length){ el.innerHTML = '<div class="panel"><div class="panel-b"><div class="empty">ยังไม่มีข้อมูลของเดือนนี้</div></div></div>'; return; }
+  const T = rows.reduce((a,r)=>({adS:a.adS+r.adS,adO:a.adO+r.adO,adAd:a.adAd+r.adAd,adP:a.adP+r.adP,tS:a.tS+r.tS,tP:a.tP+r.tP,allS:a.allS+r.allS,allP:a.allP+r.allP}),
+    {adS:0,adO:0,adAd:0,adP:0,tS:0,tP:0,allS:0,allP:0});
+
+  /* กราฟกำไร 2 เส้น */
+  const W=760,H=250,pl=64,pr=16,ptp=16,pb=28, iw=W-pl-pr, ih=H-ptp-pb;
+  const mx = Math.max(...rows.map(r=>Math.max(r.adP,r.tP)),1)*1.1;
+  const X = i => pl + (rows.length===1 ? iw/2 : i*iw/(rows.length-1));
+  const Y = v => ptp + ih - (Math.max(0,v)/mx)*ih;
+  let grid="";
+  for(let i=0;i<=4;i++){ const y=ptp+ih*i/4;
+    grid += '<line x1="'+pl+'" y1="'+y.toFixed(1)+'" x2="'+(W-pr)+'" y2="'+y.toFixed(1)+'" class="grid"/>'+
+            '<text x="'+(pl-8)+'" y="'+(y+4).toFixed(1)+'" class="axl" text-anchor="end">'+Math.round(mx*(1-i/4)/1000)+'k</text>'; }
+  const line = (k,cls) => rows.map((r,i)=>(i?"L":"M")+X(i).toFixed(1)+","+Y(r[k]).toFixed(1)).join(" ");
+  const dots = (k,color) => rows.map((r,i)=>'<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(r[k]).toFixed(1)+'" r="3.6" fill="'+color+'"><title>'+thDate(r.date)+' · '+baht(r[k])+'</title></circle>').join("");
+  let xlab=""; rows.forEach((r,i)=>{ if(i%3===0) xlab += '<text x="'+X(i).toFixed(1)+'" y="'+(H-8)+'" class="axl" text-anchor="middle">'+Number(r.date.slice(8))+'</text>'; });
+
+  el.innerHTML =
+   '<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(190px,1fr));margin-bottom:16px">'+
+    '<div class="card"><div class="lbl">กำไรแอดมิน / FB</div><div class="val dly-ad">'+baht(T.adP)+'</div><div class="foot">'+pct(T.allP?T.adP/T.allP:0)+' ของกำไรรวม · ค่าแอด '+baht(T.adAd)+'</div></div>'+
+    '<div class="card"><div class="lbl">กำไรเทเลเซลส์</div><div class="val dly-tl">'+baht(T.tP)+'</div><div class="foot">'+pct(T.allP?T.tP/T.allP:0)+' ของกำไรรวม · ไม่มีค่าแอด</div></div>'+
+    '<div class="card"><div class="lbl">กำไรรวม 2 ช่องทาง</div><div class="val">'+baht(T.allP)+'</div><div class="foot">จากยอดขาย '+baht(T.allS)+' · Margin '+pct(T.allS?T.allP/T.allS:0)+'</div></div>'+
+    '<div class="card"><div class="lbl">เฉลี่ยต่อวัน</div><div class="val">'+baht(T.allP/rows.length)+'</div><div class="foot">แอดมิน '+baht(T.adP/rows.length)+' · เทเล '+baht(T.tP/rows.length)+'</div></div>'+
+   '</div>'+
+   '<div class="panel"><div class="panel-h"><h2>กำไรรายวัน แยกช่องทาง</h2></div><div class="panel-b">'+
+    '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto">'+grid+
+    '<path d="'+line("adP")+'" fill="none" stroke="#5b7cfa" stroke-width="2.4"/>'+
+    '<path d="'+line("tP")+'" fill="none" stroke="#2fbf8f" stroke-width="2.4"/>'+
+    dots("adP","#5b7cfa")+dots("tP","#2fbf8f")+xlab+'</svg>'+
+    '<div class="dly-lg"><span><i class="dly-dot" style="background:#5b7cfa"></i>กำไรแอดมิน / FB</span>'+
+    '<span><i class="dly-dot" style="background:#2fbf8f"></i>กำไรเทเลเซลส์</span>'+
+    '<span style="margin-left:auto">แถวจางคือวันอาทิตย์ (เทเลหยุด)</span></div>'+
+   '</div></div>'+
+   '<div class="panel"><div class="panel-h"><h2>ตารางรายวัน</h2><span class="note">'+thDate(dlyFrom)+' – '+thDate(dlyTo)+' · '+rows.length+' วัน</span></div><div class="panel-b">'+
+    '<div class="dly-wrap"><table class="dly-tb"><thead><tr>'+
+     '<th>วันที่</th><th>ยอดขายแอดมิน</th><th>ออเดอร์</th><th>ค่าแอด</th><th>กำไรแอดมิน</th>'+
+     '<th>ยอดขายเทเล</th><th>กำไรเทเล</th><th>ยอดขายรวม</th><th>กำไรรวม</th><th>Margin</th></tr></thead><tbody>'+
+     rows.map(r=>'<tr'+(r.sun?' class="dly-sun"':'')+'>'+
+       '<td>'+thDate(r.date)+'</td>'+
+       '<td>'+baht(r.adS)+'</td><td>'+num(r.adO)+'</td><td>'+baht(r.adAd)+'</td>'+
+       '<td class="dly-ad">'+baht(r.adP)+'</td>'+
+       '<td>'+(r.tS?baht(r.tS):"—")+'</td><td class="dly-tl">'+(r.tP?baht(r.tP):"—")+'</td>'+
+       '<td>'+baht(r.allS)+'</td><td><b>'+baht(r.allP)+'</b></td>'+
+       '<td>'+pct(r.allS?r.allP/r.allS:0)+'</td></tr>').join("")+
+     '</tbody><tfoot><tr><td>รวม</td><td>'+baht(T.adS)+'</td><td>'+num(T.adO)+'</td><td>'+baht(T.adAd)+'</td>'+
+     '<td class="dly-ad">'+baht(T.adP)+'</td><td>'+baht(T.tS)+'</td><td class="dly-tl">'+baht(T.tP)+'</td>'+
+     '<td>'+baht(T.allS)+'</td><td>'+baht(T.allP)+'</td><td>'+pct(T.allS?T.allP/T.allS:0)+'</td></tr></tfoot></table></div>'+
+    '<div class="note" style="margin-top:12px">หมายเหตุ: กำไรแอดมินหักต้นทุนสินค้า ค่าส่ง COD ค่าคอม กล่อง และค่าแอดแล้ว · กำไรเทเลมาจากชีทค่าคอมเทเลโดยตรง · ยอดแลกซื้อมีเฉพาะยอดรวมทั้งเดือน จึงไม่ได้อยู่ในตารางนี้</div>'+
+   '</div></div>';
+}
 let CUR_VIEW = "overview";
 function applyMonth(m){
   CUR_MONTH = m;
   DAYS = ALL_DAYS.filter(d=>d.date.slice(0,7)===CUR_MONTH);
   LATEST = DAYS.map(d=>d.date).sort().pop();
   curProdDate = LATEST; prodPage = 1;
+  dlyReset();
+  { const a=$("#dlyQuick .active"); if(a)a.classList.remove("active"); const b=$('#dlyQuick [data-q="all"]'); if(b)b.classList.add("active"); }
   curAdsDate = null; curAdsProd = ""; curAdsAcct = "";
   ovRange = "month"; ovCustStart = null; ovCustEnd = null; ovProd = ""; ovCatSel = ""; ovSearch = "";
   const rb = $("#ovRange"); if(rb){ const a=rb.querySelector(".active"); if(a)a.classList.remove("active"); const b=rb.querySelector('[data-r="month"]'); if(b)b.classList.add("active"); }
@@ -6020,6 +6202,7 @@ function show(view){
   if(view==="catalog") renderCatalog();
   if(view==="tls") renderTLS();
   if(view==="ads") renderAds();
+  if(view==="daily") renderDaily();
 }
 document.querySelectorAll(".menu-item").forEach(m => m.addEventListener("click", () => show(m.dataset.view)));
 
@@ -6093,6 +6276,19 @@ $("#themebtn").addEventListener("click", () => {
 
 /* init */
 fillMonthSel();
+if($("#dlyPrint")) $("#dlyPrint").addEventListener("click", ()=>window.print());
+if($("#dlyFrom")){
+  const clearQuick = () => { const a=$("#dlyQuick .active"); if(a)a.classList.remove("active"); };
+  $("#dlyFrom").addEventListener("change", e=>{ dlyFrom=e.target.value; clearQuick(); renderDaily(); });
+  $("#dlyTo").addEventListener("change",   e=>{ dlyTo=e.target.value;   clearQuick(); renderDaily(); });
+  $("#dlyQuick").querySelectorAll("button").forEach(b=>b.addEventListener("click", ()=>{
+    const a=$("#dlyQuick .active"); if(a)a.classList.remove("active"); b.classList.add("active");
+    const all=DAYS.map(d=>d.date).sort(); const q=b.dataset.q;
+    if(q==="all"){ dlyFrom=all[0]; dlyTo=all[all.length-1]; }
+    else { const n=Number(q); dlyTo=all[all.length-1]; dlyFrom=all[Math.max(0, all.length-n)]; }
+    renderDaily();
+  }));
+}
 fillDateSelects();
 fillOvFilters();
 renderOverview();
