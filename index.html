@@ -1,24 +1,24 @@
 <title>JK888 Business Dashboard</title>
 <style>
   :root{
-    --sidebar:#0f1729; --sidebar-2:#141d33; --sidebar-ink:#e7ecf7; --sidebar-mut:#8592ad;
-    --bg:#eef1f7; --card:#ffffff; --ink:#101a30; --mut:#66748e; --line:#e6e9f1;
-    --accent:#2563eb; --accent-soft:#eaf0ff; --danger:#e5484d; --danger-soft:#fdecec; --good:#12805c; --good-soft:#e6f5ef;
-    --grad1:#3358ff; --grad2:#5b83ff;
+    --sidebar:#ffffff; --sidebar-2:#f3f3f8; --sidebar-ink:#1a1a1a; --sidebar-mut:#5f6673;
+    --bg:#f7f6fb; --card:#ffffff; --ink:#1a1a1a; --mut:#6b7280; --line:#ececf3;
+    --accent:#6f7fe3; --accent-soft:#eef0fc; --danger:#e5484d; --danger-soft:#fdecec; --good:#12805c; --good-soft:#e6f5ef;
+    --grad1:#8f9df3; --grad2:#b6a6f2;
     --shadow:0 1px 2px rgba(16,26,48,.04), 0 6px 20px rgba(16,26,48,.06);
     --r:16px;
     --font:"Leelawadee UI","Noto Sans Thai","Sarabun",-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
   }
   @media (prefers-color-scheme:dark){
-    :root{ --bg:#0a0f1e; --card:#131a2c; --ink:#e9eef8; --mut:#93a1bd; --line:#232c44;
+    :root[data-theme="auto-dark"]{ --bg:#0a0f1e; --card:#131a2c; --ink:#e9eef8; --mut:#93a1bd; --line:#232c44;
       --accent:#5b83ff; --accent-soft:#1a2440; --danger-soft:#3a1f22; --good-soft:#12291f;
       --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35); }
   }
   :root[data-theme="dark"]{ --bg:#0a0f1e; --card:#131a2c; --ink:#e9eef8; --mut:#93a1bd; --line:#232c44;
     --accent:#5b83ff; --accent-soft:#1a2440; --danger-soft:#3a1f22; --good-soft:#12291f;
     --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.35); }
-  :root[data-theme="light"]{ --bg:#eef1f7; --card:#ffffff; --ink:#101a30; --mut:#66748e; --line:#e6e9f1;
-    --accent:#2563eb; --accent-soft:#eaf0ff; --danger-soft:#fdecec; --good-soft:#e6f5ef;
+  :root[data-theme="light"]{ --bg:#f7f6fb; --card:#ffffff; --ink:#1a1a1a; --mut:#6b7280; --line:#ececf3;
+    --accent:#6f7fe3; --accent-soft:#eef0fc; --danger-soft:#fdecec; --good-soft:#e6f5ef;
     --shadow:0 1px 2px rgba(16,26,48,.04),0 6px 20px rgba(16,26,48,.06); }
 
   *{box-sizing:border-box}
@@ -521,6 +521,26 @@
   @media(max-width:1100px){.ovn-kpis{grid-template-columns:repeat(2,1fr)}.ovn-2{grid-template-columns:1fr}}
   @media(max-width:560px){.ovn-kpis{grid-template-columns:1fr}.ovn-hero h1{font-size:20px}}
   
+  
+  /* === soft theme (22 ก.ย. 69) === */
+  .sidebar{border-right:1px solid var(--line)}
+  .themebtn{border:1px solid var(--line)}
+  .menu-item.active{box-shadow:0 6px 16px rgba(143,157,243,.35)}
+  .ovn-hero{background:linear-gradient(120deg,#e8edff 0%,#f2eaff 55%,#ffeaf2 100%);color:#1a1a1a;box-shadow:0 6px 22px rgba(120,110,200,.12)}
+  .ovn-hero .sub{color:#5f6673}
+  .ovn-hero .ico{background:#ffffff;box-shadow:0 2px 8px rgba(120,110,200,.15)}
+  .ovn-date{box-shadow:0 4px 14px rgba(120,110,200,.14)}
+  .ovn-k{box-shadow:0 2px 12px rgba(40,40,80,.06)}
+  .ovn-k:before{opacity:.7}
+  .ovn-k .kval{color:#1a1a1a}
+  .ovn-tbl th{color:#3d3d48}
+  .ovn-tbl th.tele{color:#2f6b4c}.ovn-tbl th.tot{color:#8a3d57}
+  .ovn-tbl td.ad,.ovn-tbl td.pos,.ovn-sum b.pos{color:#1a1a1a}
+  .ovn-sum .row.fx span{padding-left:14px;color:#5f6673}
+  .ovn-sum .row.final{background:#fdeef1;border-bottom:0}
+  .ovn-sum .row.final b{font-size:18px}
+  .ovn-sum .row .muted2{color:#9aa0ab;font-weight:500;font-size:12px}
+  
   </style>
 
 <div class="app">
@@ -985,6 +1005,8 @@ const BASE_CATALOG = [
   { code:"JK690908 T2", name:"ที่คั้นผลไม้", cat:"", icon:"📦", promo:"โปร 1   179  โปร 2    278    โปร 4   417.", cost:40 },
   { code:"JK990927 T3", name:"กระชอนผ้าขาว", cat:"", icon:"📦", promo:"โปร 1 อัน 129  โปร 2  178.-  โปร 4 เพียง 267", cost:14 }
 ];
+/* สรุปจากชีทกำไรขาดทุน (แท็บสรุปเดือน) — ใช้ในหน้าภาพรวม */
+const PROFIT_SHEET = {"2026-09":{"source":"ชีทกำไรขาดทุน แท็บ กันยายน 2569","lastDay":"2026-09-21","days":{"2026-09-01":{"fb":55372.32,"tele":42559.05,"total":97931.37},"2026-09-02":{"fb":32777.03,"tele":38604.43,"total":71381.46},"2026-09-03":{"fb":17405.46,"tele":36703.35,"total":54108.81},"2026-09-04":{"fb":20522.76,"tele":44781.41,"total":65304.17},"2026-09-05":{"fb":33089.04,"tele":42091.88,"total":75180.92},"2026-09-06":{"fb":23794.86,"tele":0,"total":23794.86},"2026-09-07":{"fb":29695.62,"tele":54458.77,"total":84154.39},"2026-09-08":{"fb":58893.69,"tele":37736.35,"total":96630.04},"2026-09-09":{"fb":14366.87,"tele":37044.06,"total":51410.93},"2026-09-10":{"fb":28013.99,"tele":42898.89,"total":70912.88},"2026-09-11":{"fb":24570.1,"tele":36800.88,"total":61370.98},"2026-09-12":{"fb":7363.91,"tele":37425.89,"total":44789.8},"2026-09-13":{"fb":-11470.57,"tele":0,"total":-11470.57},"2026-09-14":{"fb":4629.22,"tele":42897.6,"total":47526.82},"2026-09-15":{"fb":31421.71,"tele":32676.59,"total":64098.3},"2026-09-16":{"fb":-12255.61,"tele":30880.14,"total":18624.53},"2026-09-17":{"fb":36648.05,"tele":46587.93,"total":83235.98},"2026-09-18":{"fb":16501.54,"tele":46317.38,"total":62818.92},"2026-09-19":{"fb":9323.25,"tele":33132.51,"total":42455.76},"2026-09-20":{"fb":2758.98,"tele":13046.14,"total":15805.12},"2026-09-21":{"fb":30656.53,"tele":0,"total":30656.53}},"sum":{"sales":5889483,"exch":null,"tele":696643.25,"fb":454078.75,"total":1150722},"fixed":[{"name":"หักตีกลับ","amount":300000},{"name":"VAT","amount":400000},{"name":"เงินเดือน","amount":600000},{"name":"ค่างวดออมสิน","amount":100000}],"net":-249278}};
 const TELE_MONTHS = {
  "2026-08": {
   "days": [
@@ -1654,202 +1676,234 @@ const TELE_MONTHS = {
     "so": 45955,
     "se": 19820,
     "st": 65775,
-    "profit": 41204.33,
-    "pct": 62.64
+    "profit": 42559.05,
+    "pct": 64.7
    },
    {
     "date": "2026-09-02",
     "so": 42770,
     "se": 18120,
     "st": 60890,
-    "profit": 37650.57,
-    "pct": 61.83
+    "profit": 38604.43,
+    "pct": 63.4
    },
    {
     "date": "2026-09-03",
     "so": 39938,
     "se": 17040,
     "st": 56978,
-    "profit": 36113.46,
-    "pct": 63.38
+    "profit": 36703.35,
+    "pct": 64.42
    },
    {
     "date": "2026-09-04",
     "so": 48462,
     "se": 21350,
     "st": 69812,
-    "profit": 43669.29,
-    "pct": 62.55
+    "profit": 44781.41,
+    "pct": 64.15
    },
    {
     "date": "2026-09-05",
     "so": 44944,
     "se": 19820,
     "st": 64764,
-    "profit": 41294.27,
-    "pct": 63.76
+    "profit": 42091.88,
+    "pct": 64.99
    },
    {
     "date": "2026-09-07",
     "so": 59615,
     "se": 24200,
     "st": 83815,
-    "profit": 53014.85,
-    "pct": 63.25
+    "profit": 54458.77,
+    "pct": 64.97
    },
    {
     "date": "2026-09-08",
     "so": 40377,
     "se": 18760,
     "st": 59137,
-    "profit": 36998.57,
-    "pct": 62.56
+    "profit": 37736.35,
+    "pct": 63.81
    },
    {
     "date": "2026-09-09",
     "so": 37044,
     "se": 19620,
     "st": 56664,
-    "profit": 36434.68,
-    "pct": 64.3
+    "profit": 37044.06,
+    "pct": 65.37
    },
    {
     "date": "2026-09-10",
     "so": 43084,
     "se": 22020,
     "st": 65104,
-    "profit": 41727.74,
-    "pct": 64.09
+    "profit": 42898.89,
+    "pct": 65.89
    },
    {
     "date": "2026-09-11",
     "so": 36381,
     "se": 15800,
     "st": 52181,
-    "profit": 35518.02,
-    "pct": 68.07
+    "profit": 36800.88,
+    "pct": 70.53
    },
    {
     "date": "2026-09-12",
     "so": 33634,
     "se": 23520,
     "st": 57154,
-    "profit": 36889.14,
-    "pct": 64.54
+    "profit": 37425.89,
+    "pct": 65.48
    },
    {
     "date": "2026-09-14",
     "so": 43840,
     "se": 21540,
     "st": 65380,
-    "profit": 41933.42,
-    "pct": 64.14
+    "profit": 42897.6,
+    "pct": 65.61
    },
    {
     "date": "2026-09-15",
-    "so": 29151,
+    "so": 30105,
     "se": 18160,
-    "st": 47311,
-    "profit": 32038.75,
-    "pct": 67.72
+    "st": 48265,
+    "profit": 32676.59,
+    "pct": 67.7
    },
    {
     "date": "2026-09-16",
     "so": 29101,
     "se": 19320,
     "st": 48421,
-    "profit": 31158.05,
-    "pct": 64.35
+    "profit": 30880.14,
+    "pct": 63.77
+   },
+   {
+    "date": "2026-09-17",
+    "so": 46974,
+    "se": 23280,
+    "st": 70254,
+    "profit": 46587.93,
+    "pct": 66.31
+   },
+   {
+    "date": "2026-09-18",
+    "so": 41704,
+    "se": 23081,
+    "st": 64785,
+    "profit": 46317.38,
+    "pct": 71.49
+   },
+   {
+    "date": "2026-09-19",
+    "so": 31821,
+    "se": 17621,
+    "st": 49442,
+    "profit": 33132.51,
+    "pct": 67.01
+   },
+   {
+    "date": "2026-09-20",
+    "so": 14420,
+    "se": 5820,
+    "st": 20240,
+    "profit": 13046.14,
+    "pct": 64.46
    }
   ],
   "persons": [
    {
     "name": "พี่ออย",
     "orders": 0,
-    "comm": 3539.22,
+    "comm": 4106.07,
     "carry": 8044,
-    "salesAug": 109930,
-    "allSales": 117974
+    "salesAug": 128825,
+    "allSales": 136869
    },
    {
     "name": "พี่ฟิล์ม",
     "orders": 0,
-    "comm": 3158.7,
+    "comm": 3817.2,
     "carry": 8711,
-    "salesAug": 96579,
-    "allSales": 105290
-   },
-   {
-    "name": "มายด์",
-    "orders": 0,
-    "comm": 2945.76,
-    "carry": 8109,
-    "salesAug": 90083,
-    "allSales": 98192
+    "salesAug": 118529,
+    "allSales": 127240
    },
    {
     "name": "พี่ปอ",
     "orders": 0,
-    "comm": 2883.45,
+    "comm": 3661.17,
     "carry": 6086,
-    "salesAug": 90029,
-    "allSales": 96115
+    "salesAug": 115953,
+    "allSales": 122039
    },
    {
-    "name": "พี่เอ้",
+    "name": "มายด์",
     "orders": 0,
-    "comm": 2752.05,
-    "carry": 5201,
-    "salesAug": 86534,
-    "allSales": 91735
+    "comm": 3529.47,
+    "carry": 8109,
+    "salesAug": 109540,
+    "allSales": 117649
    },
    {
     "name": "พี่น้ำ",
     "orders": 0,
-    "comm": 2713.8,
+    "comm": 3532.47,
     "carry": 10566,
-    "salesAug": 79894,
-    "allSales": 90460
+    "salesAug": 107183,
+    "allSales": 117749
+   },
+   {
+    "name": "พี่เอ้",
+    "orders": 0,
+    "comm": 3354.69,
+    "carry": 5201,
+    "salesAug": 106622,
+    "allSales": 111823
    },
    {
     "name": "แป้ง",
     "orders": 0,
-    "comm": 2316.3,
+    "comm": 2705.76,
     "carry": 6049,
-    "salesAug": 71161,
-    "allSales": 77210
+    "salesAug": 84143,
+    "allSales": 90192
    },
    {
     "name": "พี่เจน",
     "orders": 0,
-    "comm": 2209.44,
+    "comm": 2710.71,
     "carry": 6633,
-    "salesAug": 67015,
-    "allSales": 73648
+    "salesAug": 83724,
+    "allSales": 90357
    },
    {
     "name": "พี่มิ้ว",
     "orders": 0,
-    "comm": 1950.93,
+    "comm": 2481.93,
     "carry": 5000,
-    "salesAug": 60031,
-    "allSales": 65031
+    "salesAug": 77731,
+    "allSales": 82731
    },
    {
     "name": "เนย",
     "orders": 0,
-    "comm": 1028.96,
+    "comm": 1301.86,
     "carry": 4051,
-    "salesAug": 47397,
-    "allSales": 51448
+    "salesAug": 61042,
+    "allSales": 65093
    },
    {
     "name": "พี่ฟิมกังสดาล",
     "orders": 0,
-    "comm": 936.36,
+    "comm": 1197.36,
     "carry": 4049,
-    "salesAug": 42769,
-    "allSales": 46818
+    "salesAug": 55819,
+    "allSales": 59868
    },
    {
     "name": "ออม",
@@ -1863,333 +1917,337 @@ const TELE_MONTHS = {
   "products": [
    {
     "name": "น้ำหอมในรถ",
-    "profit": 33538
-   },
-   {
-    "name": "น้ำยาถูพื้น อัพข้ามสินค้า",
-    "profit": 22937
+    "profit": 39044
    },
    {
     "name": "น้ำหอมดับกลิ่น อัพข้ามสินค้า",
-    "profit": 21847
-   },
-   {
-    "name": "รถไฟabc",
-    "profit": 21211.19
-   },
-   {
-    "name": "ทิชชู่ดำ อัพข้ามสินค้า",
-    "profit": 20679
+    "profit": 27404.8
    },
    {
     "name": "หมอนยางพารา",
-    "profit": 19516.91
+    "profit": 26018.87
    },
    {
-    "name": "น้ำหอมในรถ",
-    "profit": 17493.8
+    "name": "รถไฟabc",
+    "profit": 25563.68
    },
    {
-    "name": "กาวซ่อม",
-    "profit": 16131.13
+    "name": "ทิชชู่ดำ อัพข้ามสินค้า",
+    "profit": 25445.4
    },
    {
-    "name": "ทชเปียกถูพื้น",
-    "profit": 15143.08
+    "name": "น้ำยาถูพื้น อัพข้ามสินค้า",
+    "profit": 24761.8
    },
    {
     "name": "ตัวต่อสร้างบ้าน",
-    "profit": 13349.05
+    "profit": 21123.58
+   },
+   {
+    "name": "กาวซ่อม",
+    "profit": 20915.9
+   },
+   {
+    "name": "น้ำหอมในรถ",
+    "profit": 20483
    },
    {
     "name": "รถไฟแม่เหล็ก",
-    "profit": 11860.71
+    "profit": 15977.2
    },
    {
-    "name": "กล่องสแตนเลส",
-    "profit": 7387.34
-   },
-   {
-    "name": "เทปนาโน",
-    "profit": 7054.55
-   },
-   {
-    "name": "จอขยาย",
-    "profit": 6934.44
-   },
-   {
-    "name": "เป๋าคสอ.",
-    "profit": 6372.81
-   },
-   {
-    "name": "สติ๊กเกอร์ดับกลิ่นห้องน้ำ",
-    "profit": 6286.2
+    "name": "ทชเปียกถูพื้น",
+    "profit": 14998.08
    },
    {
     "name": "เก้าอี้พับได้",
-    "profit": 6224.07
+    "profit": 12636.32
    },
    {
-    "name": "ตัวต่อใส",
-    "profit": 5572.32
+    "name": "กล่องสแตนเลส",
+    "profit": 11463.81
+   },
+   {
+    "name": "จอขยาย",
+    "profit": 10666.72
+   },
+   {
+    "name": "เทปนาโน",
+    "profit": 9741.02
+   },
+   {
+    "name": "เป๋าคสอ.",
+    "profit": 9550.02
+   },
+   {
+    "name": "สติ๊กเกอร์ดับกลิ่นห้องน้ำ",
+    "profit": 9342.4
    },
    {
     "name": "เป๋ารองเท้า",
-    "profit": 5521.78
+    "profit": 7391.92
    },
    {
-    "name": "กุญแจเขากวาง",
-    "profit": 5308.42
+    "name": "ตัวต่อใส",
+    "profit": 7348.54
    },
    {
     "name": "แพนด้า",
-    "profit": 5095.21
+    "profit": 6668.18
    },
    {
-    "name": "คิ้วประตู",
-    "profit": 4766.71
-   },
-   {
-    "name": "กะทะหลุม",
-    "profit": 4752.89
+    "name": "กุญแจเขากวาง",
+    "profit": 6594.53
    },
    {
     "name": "เก็บชุดชั้นใน",
-    "profit": 3807.82
+    "profit": 6126.59
    },
    {
-    "name": "แก้วสแตนเลส",
-    "profit": 3542.07
-   },
-   {
-    "name": "จุกลม",
-    "profit": 3458.62
+    "name": "คิ้วประตู",
+    "profit": 5954.21
    },
    {
     "name": "ถุงถนอม",
-    "profit": 3427.41
+    "profit": 5217.38
    },
    {
-    "name": "มายคราฟ",
-    "profit": 3050
+    "name": "กะทะหลุม",
+    "profit": 5112.09
+   },
+   {
+    "name": "แก้วสแตนเลส",
+    "profit": 5008.24
+   },
+   {
+    "name": "ชั้นวาง",
+    "profit": 4390.62
+   },
+   {
+    "name": "จุกลม",
+    "profit": 4088.97
    },
    {
     "name": "ตัวต่อแม่เหล็ก",
-    "profit": 3014.51
+    "profit": 4081.89
    },
    {
     "name": "ยึดราวม่าน",
-    "profit": 2975.56
+    "profit": 4007.96
+   },
+   {
+    "name": "รูบิค",
+    "profit": 3896.48
+   },
+   {
+    "name": "มายคราฟ",
+    "profit": 3862.5
    },
    {
     "name": "ไม้แขวน5ช่อง",
-    "profit": 2618
+    "profit": 3779.03
    },
    {
     "name": "สบู่ผนัง",
-    "profit": 2464.1
+    "profit": 2994.01
    },
    {
-    "name": "ถุงคลุมเสื้อผ้า",
-    "profit": 2458.2
+    "name": "กั้นประตู",
+    "profit": 2913.96
+   },
+   {
+    "name": "ตาข่ายในรถ",
+    "profit": 2846.8
    },
    {
     "name": "ส้อมจิ้มเนื้อ",
-    "profit": 2378
+    "profit": 2787.18
+   },
+   {
+    "name": "ไม้แขวนรองเท้้า",
+    "profit": 2666.6
+   },
+   {
+    "name": "ถุงคลุมเสื้อผ้า",
+    "profit": 2644.8
+   },
+   {
+    "name": "โคมไฟจิ๋ว",
+    "profit": 2626.4
+   },
+   {
+    "name": "แปรงพัดลม",
+    "profit": 2599.97
+   },
+   {
+    "name": "กระเป๋ายา",
+    "profit": 2488.47
+   },
+   {
+    "name": "ราวสูญญากาศ",
+    "profit": 2407.57
+   },
+   {
+    "name": "ยึดมือถือในรถ",
+    "profit": 2313.47
    },
    {
     "name": "เจลปั้น",
     "profit": 2308.64
    },
    {
-    "name": "ตาข่ายในรถ",
-    "profit": 2284
-   },
-   {
-    "name": "โคมไฟจิ๋ว",
-    "profit": 2280.8
-   },
-   {
-    "name": "ชั้นวาง",
-    "profit": 2146.62
-   },
-   {
-    "name": "ยึดมือถือในรถ",
-    "profit": 2118.29
-   },
-   {
-    "name": "รูบิค",
-    "profit": 2078.96
-   },
-   {
-    "name": "กระเป๋ายา",
-    "profit": 2018.47
-   },
-   {
-    "name": "แปรงพัดลม",
-    "profit": 1952.77
-   },
-   {
     "name": "พรมเช็ดเท้า",
-    "profit": 1912.4
-   },
-   {
-    "name": "ราวสูญญากาศ",
-    "profit": 1813.78
+    "profit": 2103
    },
    {
     "name": "ไม้ถูพื้น",
-    "profit": 1740
+    "profit": 2088
    },
    {
     "name": "พิมไอติม",
-    "profit": 1664.6
-   },
-   {
-    "name": "ไม้แขวนรองเท้้า",
-    "profit": 1579.2
+    "profit": 1938.2
    },
    {
     "name": "แผ่นน้ำหอม",
-    "profit": 1521
-   },
-   {
-    "name": "กั้นประตู",
-    "profit": 1476.8
-   },
-   {
-    "name": "สับกระเทียม",
-    "profit": 1215.07
+    "profit": 1699
    },
    {
     "name": "าวงคอนโซล",
-    "profit": 1097.41
-   },
-   {
-    "name": "ไม้พาย",
-    "profit": 1080.17
-   },
-   {
-    "name": "แปรงหน้าต่าง",
-    "profit": 933.87
-   },
-   {
-    "name": "ฟิมกันกระจก",
-    "profit": 906.97
-   },
-   {
-    "name": "ซองแว่น",
-    "profit": 834.97
-   },
-   {
-    "name": "บังแดด",
-    "profit": 795.46
+    "profit": 1431.1
    },
    {
     "name": "ดินสอหมุนได้",
-    "profit": 741.66
+    "profit": 1354.02
    },
    {
-    "name": "ทิชชู่สัตว์เลี้ยง",
-    "profit": 592.8
+    "name": "สับกระเทียม",
+    "profit": 1340.37
+   },
+   {
+    "name": "ไม้พาย",
+    "profit": 1224.77
+   },
+   {
+    "name": "แปรงหน้าต่าง",
+    "profit": 1175.36
+   },
+   {
+    "name": "บังแดด",
+    "profit": 1057.06
+   },
+   {
+    "name": "ฟิมกันกระจก",
+    "profit": 930.97
    },
    {
     "name": "ตะขอแขวนประตุ",
-    "profit": 588.2
+    "profit": 896.2
    },
    {
     "name": "รวมเทส",
-    "profit": 532.15
+    "profit": 833.78
+   },
+   {
+    "name": "ซองแว่น",
+    "profit": 830.97
+   },
+   {
+    "name": "ทิชชู่สัตว์เลี้ยง",
+    "profit": 649.8
    },
    {
     "name": "ตาข่ายสครับผิว",
-    "profit": 518.57
+    "profit": 631.54
    },
    {
     "name": "ขวดสเป",
-    "profit": 495.87
-   },
-   {
-    "name": "ช่องแอร์",
-    "profit": 485.31
+    "profit": 587.33
    },
    {
     "name": "ยึดมือถือ+มองหลัง",
-    "profit": 465.9
+    "profit": 527.87
+   },
+   {
+    "name": "ช่องแอร์",
+    "profit": 521.31
    },
    {
     "name": "สเปดับกลิ่นเท้า",
-    "profit": 364.03
-   },
-   {
-    "name": "แกะสัปปะรด",
-    "profit": 332.31
-   },
-   {
-    "name": "พิมพ์วุ้น",
-    "profit": 325.8
-   },
-   {
-    "name": "ตัวต่อหิมะ",
-    "profit": 312.39
+    "profit": 461.03
    },
    {
     "name": "เก็บของในรถ",
-    "profit": 303.2
+    "profit": 435.33
+   },
+   {
+    "name": "พิมพ์วุ้น",
+    "profit": 398.2
+   },
+   {
+    "name": "ตัวต่อหิมะ",
+    "profit": 387.39
    },
    {
     "name": "แผ่นกรอง",
-    "profit": 273
+    "profit": 364
+   },
+   {
+    "name": "แกะสัปปะรด",
+    "profit": 358.31
+   },
+   {
+    "name": "ซ่อมผ้า",
+    "profit": 277.2
+   },
+   {
+    "name": "สายคล้องแว่น",
+    "profit": 271
    },
    {
     "name": "ผ้าห่ม",
     "profit": 262.99
    },
    {
-    "name": "ซ่อมผ้า",
-    "profit": 205.2
-   },
-   {
     "name": "กรองน้ำ",
-    "profit": 153.31
+    "profit": 201.31
    },
    {
     "name": "ที่เก็บถุง",
-    "profit": 7
+    "profit": 37
    }
   ],
   "exchange": [
    {
     "name": "ผ้าไมโคร",
-    "pieces": 18045,
-    "sales": 180650,
-    "cost": 54135,
-    "comm": 5419.5,
-    "profit": 121095.5
+    "pieces": 22870,
+    "sales": 229151,
+    "cost": 68610,
+    "comm": 6874.53,
+    "profit": 153666.47
    },
    {
     "name": "ทิชชู่แขวนหมี",
-    "pieces": 1593,
-    "sales": 52700,
-    "cost": 15930,
-    "comm": 1581,
-    "profit": 35189
+    "pieces": 1950,
+    "sales": 64520,
+    "cost": 19500,
+    "comm": 1935.6,
+    "profit": 43084.4
    },
    {
     "name": "หม้อกรอง",
-    "pieces": 435,
-    "sales": 43700,
-    "cost": 15225,
-    "comm": 1311,
-    "profit": 27164
+    "pieces": 518,
+    "sales": 51981,
+    "cost": 18130,
+    "comm": 1559.43,
+    "profit": 32291.57
    },
    {
     "name": "ชาม5ใบ",
-    "pieces": 17,
-    "sales": 2040,
-    "cost": 680,
-    "comm": 61.2,
-    "profit": 1298.8
+    "pieces": 27,
+    "sales": 3240,
+    "cost": 1080,
+    "comm": 97.2,
+    "profit": 2062.8
    },
    {
     "name": "แรปถนอม",
@@ -2200,20 +2258,20 @@ const TELE_MONTHS = {
     "profit": 0
    }
   ],
-  "combinedProfit": 545645.14,
+  "combinedProfit": 696643.25,
   "total": {
-   "so": 574296,
-   "se": 279090,
-   "st": 853386,
-   "profit": 545645.14
+   "so": 710169,
+   "se": 348892,
+   "st": 1059061,
+   "profit": 696643.25
   },
   "personTotal": {
-   "comm": 26785.69,
+   "comm": 32749.41,
    "carry": 72499,
-   "salesAug": 858958,
-   "all": 931457
+   "salesAug": 1066647,
+   "all": 1139146
   },
-  "note": "ออเดอร์ = ขายปกติ · แลกซื้อ = อัพเซล/แลกซื้อ · ข้อมูลในชีทถึง 16 ก.ย. · วันที่ 6, 13 ก.ย. ในชีทยังไม่มียอด จึงไม่มีในตาราง"
+  "note": "ออเดอร์ = ขายปกติ · แลกซื้อ = อัพเซล/แลกซื้อ · ข้อมูลในชีทถึง 20 ก.ย. · วันที่ 6, 13 ก.ย. ในชีทยังไม่มียอด จึงไม่มีในตาราง"
  }
 };
 /* TELE_DATA: days = ทุกเดือนรวมกัน (ทุกที่กรองตามวันที่อยู่แล้ว), ส่วนอื่นเป็นของเดือนที่เลือก (CUR_MONTH) */
@@ -2438,12 +2496,20 @@ function ovnData(month){
     return { date: day.date, d: +day.date.slice(8), sales, orders, pieces, cost, ad, fb,
              tele: t ? t.profit : 0, teleSales: t ? t.st : 0, hasTele: !!t, total: fb + (t ? t.profit : 0) };
   }).sort((a,b) => a.d - b.d);
+  // เก็บค่าจากเว็บไว้เทียบเดือนก่อน แล้วใช้ตัวเลขจากชีทกำไรขาดทุน (ถ้ามี) — พี่แบงค์สั่ง 22 ก.ย. 69
+  rows.forEach(r => { r.fbWeb = r.fb; r.teleWeb = r.tele; });
+  const PSm = (typeof PROFIT_SHEET !== "undefined" && PROFIT_SHEET[month]) ? PROFIT_SHEET[month] : null;
+  if (PSm) rows.forEach(r => { const x = PSm.days[r.date]; if (x) { r.fb = x.fb; r.tele = x.tele; r.total = x.total; r.hasTele = r.hasTele || !!x.tele; } });
   const S = rows.reduce((a,r) => ({ sales:a.sales+r.sales, orders:a.orders+r.orders, pieces:a.pieces+r.pieces,
     cost:a.cost+r.cost, ad:a.ad+r.ad, fb:a.fb+r.fb, tele:a.tele+r.tele, teleSales:a.teleSales+r.teleSales, total:a.total+r.total }),
     { sales:0, orders:0, pieces:0, cost:0, ad:0, fb:0, tele:0, teleSales:0, total:0 });
   S.exch = tm ? (tm.exchange||[]).reduce((a,x) => a + (x.profit||0), 0) : 0;
   S.allSales = S.sales + S.teleSales;
   S.lastDay = rows.length ? rows[rows.length-1].d : 0;
+  S.web = { fb: rows.reduce((a,r)=>a+r.fbWeb,0), tele: rows.reduce((a,r)=>a+r.teleWeb,0) };
+  S.web.total = S.web.fb + S.web.tele; S.web.allSales = S.allSales;
+  S.sheet = PSm;
+  if (PSm) { S.fb = PSm.sum.fb || 0; S.tele = PSm.sum.tele || 0; S.total = PSm.sum.total || (S.fb + S.tele); }
   return { rows, S };
 }
 function ovnPrevMonth(month){
@@ -2473,14 +2539,14 @@ function ovnChart(rows){
   }
   rows.forEach((r,i) => {
     const x = cx(i) - bw/2;
-    if (r.fb >= 0){ const hh = Math.max(1, y(0) - y(r.fb)); g += '<rect x="' + x.toFixed(1) + '" y="' + (y(r.fb)).toFixed(1) + '" width="' + bw + '" height="' + hh.toFixed(1) + '" fill="#5b83ff" rx="3"/>'; }
-    else { const hh = Math.max(1, y(r.fb) - y(0)); g += '<rect x="' + x.toFixed(1) + '" y="' + y(0).toFixed(1) + '" width="' + bw + '" height="' + hh.toFixed(1) + '" fill="#e5484d" rx="3"/>'; }
+    if (r.fb >= 0){ const hh = Math.max(1, y(0) - y(r.fb)); g += '<rect x="' + x.toFixed(1) + '" y="' + (y(r.fb)).toFixed(1) + '" width="' + bw + '" height="' + hh.toFixed(1) + '" fill="#8fa6fb" rx="3"/>'; }
+    else { const hh = Math.max(1, y(r.fb) - y(0)); g += '<rect x="' + x.toFixed(1) + '" y="' + y(0).toFixed(1) + '" width="' + bw + '" height="' + hh.toFixed(1) + '" fill="#f09a9d" rx="3"/>'; }
     if (r.tele > 0){ const base = r.fb > 0 ? r.fb : 0; const hh = Math.max(1, y(base) - y(base + r.tele));
-      g += '<rect x="' + x.toFixed(1) + '" y="' + y(base + r.tele).toFixed(1) + '" width="' + bw + '" height="' + hh.toFixed(1) + '" fill="#22c55e" rx="3"/>'; }
+      g += '<rect x="' + x.toFixed(1) + '" y="' + y(base + r.tele).toFixed(1) + '" width="' + bw + '" height="' + hh.toFixed(1) + '" fill="#8ad3a9" rx="3"/>'; }
   });
   const pts = rows.map((r,i) => cx(i).toFixed(1) + "," + y(r.total).toFixed(1)).join(" ");
-  g += '<polyline points="' + pts + '" fill="none" stroke="#101a30" stroke-width="2" stroke-opacity=".55"/>';
-  rows.forEach((r,i) => { g += '<circle cx="' + cx(i).toFixed(1) + '" cy="' + y(r.total).toFixed(1) + '" r="3.2" fill="var(--card)" stroke="#101a30" stroke-width="1.6"/>'; });
+  g += '<polyline points="' + pts + '" fill="none" stroke="#6b7280" stroke-width="2" stroke-opacity=".55"/>';
+  rows.forEach((r,i) => { g += '<circle cx="' + cx(i).toFixed(1) + '" cy="' + y(r.total).toFixed(1) + '" r="3.2" fill="var(--card)" stroke="#6b7280" stroke-width="1.6"/>'; });
   rows.forEach((r,i) => {
     g += '<text x="' + cx(i).toFixed(1) + '" y="' + (H-8) + '" text-anchor="middle" font-size="10" fill="var(--mut)">' + r.d + '</text>';
     g += '<rect class="ovn-hit" data-i="' + i + '" x="' + (cx(i) - iw/rows.length/2).toFixed(1) + '" y="' + PT + '" width="' + (iw/rows.length).toFixed(1) + '" height="' + ih + '" fill="transparent"/>';
@@ -2491,8 +2557,8 @@ function ovnDonut(fb, tele){
   const tot = Math.max(0, fb) + Math.max(0, tele) || 1;
   const p1 = Math.max(0, fb) / tot, C = 2*Math.PI*54;
   return '<svg width="180" height="180" viewBox="0 0 160 160">' +
-    '<circle cx="80" cy="80" r="54" fill="none" stroke="#22c55e" stroke-width="24"/>' +
-    '<circle cx="80" cy="80" r="54" fill="none" stroke="#2563eb" stroke-width="24" stroke-dasharray="' + (C*p1).toFixed(1) + ' ' + C.toFixed(1) + '" transform="rotate(-90 80 80)"/>' +
+    '<circle cx="80" cy="80" r="54" fill="none" stroke="#8ad3a9" stroke-width="24"/>' +
+    '<circle cx="80" cy="80" r="54" fill="none" stroke="#8fa6fb" stroke-width="24" stroke-dasharray="' + (C*p1).toFixed(1) + ' ' + C.toFixed(1) + '" transform="rotate(-90 80 80)"/>' +
     '<text x="80" y="76" text-anchor="middle" font-size="17" font-weight="700" fill="var(--ink)">' + baht(Math.round(fb+tele)) + '</text>' +
     '<text x="80" y="96" text-anchor="middle" font-size="11" fill="var(--mut)">กำไรรวม</text></svg>';
 }
@@ -2503,10 +2569,13 @@ function renderOverview(){
   const P = pm ? ovnData(pm) : null;
   const pf = P ? { sales: 0, fb: 0, tele: 0, exch: P.S.exch, total: 0, allSales: 0 } : null;
   if (P){ // เทียบช่วงวันเท่ากัน (1..วันล่าสุดของเดือนนี้)
-    P.rows.filter(r => r.d <= S.lastDay).forEach(r => { pf.sales += r.sales; pf.fb += r.fb; pf.tele += r.tele; pf.total += r.total; pf.allSales += r.sales + r.teleSales; });
+    P.rows.filter(r => r.d <= S.lastDay).forEach(r => { pf.sales += r.sales; pf.fb += r.fbWeb; pf.tele += r.teleWeb; pf.total += r.fbWeb + r.teleWeb; pf.allSales += r.sales + r.teleSales; });
   }
-  const grand = S.fb + S.tele;
-  const vat = (MONTH_PLAN.fixed.find(f => /VAT/i.test(f.name)) || { amount: 0 }).amount;
+  const grand = S.sheet ? (S.sheet.sum.total || S.fb + S.tele) : S.fb + S.tele;
+  const salesShown = (S.sheet && S.sheet.sum.sales) ? S.sheet.sum.sales : S.allSales;
+  const fixed = S.sheet ? S.sheet.fixed : MONTH_PLAN.fixed;
+  const netProfit = (S.sheet && S.sheet.net != null) ? S.sheet.net : grand - fixed.reduce((a,f)=>a+(f.amount||0),0);
+  const srcNote = S.sheet ? "ตามชีทกำไรขาดทุน" : "";
   const last = rows.length ? rows[rows.length-1].date : null;
   const K = (c, cs, ico, lbl, val, foot, delta) =>
     '<div class="ovn-k" style="--kc:' + c + ';--kcs:' + cs + '"><div class="kico">' + ico + '</div><div class="klbl">' + lbl + '</div>' +
@@ -2516,20 +2585,20 @@ function renderOverview(){
       '<div class="sub">สรุปทุกช่องทางในที่เดียว ดูง่าย รู้ชัด ตัดสินใจได้ทันที</div></div></div>' +
       '<div class="ovn-date"><span style="font-size:20px">📅</span><div><div class="d1">ข้อมูลถึงวันที่</div><div class="d2">' + (last ? thDate(last) : "—") + '</div></div></div></div>' +
     '<div class="ovn-kpis">' +
-      K('#2563eb','#eaf0ff','💰','ยอดขายรวมทั้งเดือน', baht(Math.round(S.allSales)), 'แอด ' + baht(Math.round(S.sales)) + ' + เทเล ' + baht(Math.round(S.teleSales)), pf ? ovnDelta(S.allSales, pf.allSales) : '') +
-      K('#12805c','#e6f5ef','🛒','กำไร FB แอด', baht(Math.round(S.fb)), 'ยอดขาย − ต้นทุน − ค่าแอด', pf ? ovnDelta(S.fb, pf.fb) : '') +
-      K('#7c3aed','#f1e9ff','📞','กำไร TELE-CRM', baht(Math.round(S.tele)), 'จากชีทค่าคอมเทเล', pf ? ovnDelta(S.tele, pf.tele) : '') +
-      K('#b45309','#fdf0dc','🎁','กำไรจากแลกซื้อ', baht(Math.round(S.exch)), 'อัพเซล/แลกซื้อทั้งเดือน', pf ? ovnDelta(S.exch, pf.exch) : '') +
-      K('#e5484d','#fdecec','📈','กำไรรวมทั้งหมด', baht(Math.round(grand)), 'มาร์จิ้น ' + (S.allSales ? (grand/S.allSales*100).toFixed(1) : 0) + '% ของยอดขาย', pf ? ovnDelta(grand, pf.total) : '') +
+      K('#8f9df3','#eef0fc','💰', S.sheet ? 'ยอดขาย' + ovnMonthFull(M) : 'ยอดขายรวมทั้งเดือน', baht(Math.round(salesShown)), S.sheet ? srcNote : 'แอด ' + baht(Math.round(S.sales)) + ' + เทเล ' + baht(Math.round(S.teleSales)), pf ? ovnDelta(S.web.allSales, pf.allSales) : '') +
+      K('#7cc59c','#e9f6ef','🛒','กำไร FB แอด', baht(Math.round(S.fb)), S.sheet ? srcNote : 'ยอดขาย − ต้นทุน − ค่าแอด', pf ? ovnDelta(S.web.fb, pf.fb) : '') +
+      K('#b39ae9','#f4effc','📞','กำไรโทรอัพ (TELE-CRM)', baht(Math.round(S.tele)), S.sheet ? srcNote : 'จากชีทค่าคอมเทเล', pf ? ovnDelta(S.web.tele, pf.tele) : '') +
+      K('#e8b46f','#fcf4e8','🎁','กำไรจากแลกซื้อ', baht(Math.round(S.exch)), 'รวมอยู่ในกำไรโทรอัพแล้ว', pf ? ovnDelta(S.exch, pf.exch) : '') +
+      K('#ec9aab','#fdeff2','📈','กำไรรวมทั้งหมด', baht(Math.round(grand)), 'มาร์จิ้น ' + (salesShown ? (grand/salesShown*100).toFixed(1) : 0) + '% ของยอดขาย', pf ? ovnDelta(S.web.total, pf.total) : '') +
     '</div>' +
     '<div class="ovn-2">' +
       '<div class="ovn-p"><div class="ovn-ph"><h2><span class="pico">📊</span>กำไรรายวัน</h2>' +
-        '<div class="ovn-lg"><span><i style="background:#5b83ff"></i>กำไร FB ADS</span><span><i style="background:#22c55e"></i>กำไร TELE-CRM</span><span><i style="background:#101a30"></i>กำไรรวม/วัน</span></div></div>' +
+        '<div class="ovn-lg"><span><i style="background:#8fa6fb"></i>กำไร FB ADS</span><span><i style="background:#8ad3a9"></i>กำไร TELE-CRM</span><span><i style="background:#6b7280"></i>กำไรรวม/วัน</span></div></div>' +
         '<div class="ovn-chart" id="ovnChart">' + ovnChart(rows) + '<div class="ovn-tip" id="ovnTip"></div></div></div>' +
       '<div class="ovn-p"><div class="ovn-ph"><h2><span class="pico">🍩</span>สัดส่วนกำไรรวมทั้งเดือน</h2></div>' +
         '<div class="ovn-donut">' + ovnDonut(S.fb, S.tele) +
-        '<div class="ovn-dl"><div class="it"><i style="background:#2563eb"></i><div>FB ADS<b>' + baht(Math.round(S.fb)) + '</b><span class="note">' + (grand ? (S.fb/grand*100).toFixed(1) : 0) + '%</span></div></div>' +
-        '<div class="it"><i style="background:#22c55e"></i><div>TELE-CRM<b>' + baht(Math.round(S.tele)) + '</b><span class="note">' + (grand ? (S.tele/grand*100).toFixed(1) : 0) + '%</span></div></div></div></div></div>' +
+        '<div class="ovn-dl"><div class="it"><i style="background:#8fa6fb"></i><div>FB ADS<b>' + baht(Math.round(S.fb)) + '</b><span class="note">' + (grand ? (S.fb/grand*100).toFixed(1) : 0) + '%</span></div></div>' +
+        '<div class="it"><i style="background:#8ad3a9"></i><div>TELE-CRM<b>' + baht(Math.round(S.tele)) + '</b><span class="note">' + (grand ? (S.tele/grand*100).toFixed(1) : 0) + '%</span></div></div></div></div></div>' +
     '</div>' +
     '<div class="ovn-2">' +
       '<div class="ovn-p"><div class="ovn-ph"><h2><span class="pico">📋</span>รายละเอียดกำไรรายวัน</h2><span class="note">' + rows.length + ' วัน</span></div>' +
@@ -2540,13 +2609,14 @@ function renderOverview(){
           '<td class="tot ' + (r.total<0?'neg2':'') + '">' + num(Math.round(r.total)) + '</td></tr>').join("") +
         '</tbody><tfoot><tr><td class="l">รวม ' + rows.length + ' วัน</td><td>' + num(Math.round(S.sales)) + '</td><td>' + num(Math.round(S.cost)) + '</td><td>' + num(Math.round(S.ad)) + '</td>' +
         '<td class="' + (S.fb<0?'neg2':'pos') + '">' + num(Math.round(S.fb)) + '</td><td class="pos">' + num(Math.round(S.tele)) + '</td><td class="tot">' + num(Math.round(grand)) + '</td></tr></tfoot></table></div></div>' +
-      '<div class="ovn-p ovn-sum"><div class="ovn-ph"><h2><span class="pico">🧾</span>สรุปกำไรขาดทุนเพิ่มเติม</h2></div>' +
-        '<div class="row"><span>ยอดขาย' + ovnMonthFull(M) + '</span><b>' + baht(Math.round(S.allSales)) + '</b></div>' +
-        '<div class="row"><span>กำไรแลกซื้อ</span><b class="pos">' + baht(Math.round(S.exch)) + '</b></div>' +
-        '<div class="row"><span>VAT</span><b class="neg2">− ' + baht(Math.round(vat)) + '</b></div>' +
-        '<div class="row"><span>กำไรโทรอัพ (TELE-CRM)</span><b class="pos">' + baht(Math.round(S.tele)) + '</b></div>' +
-        '<div class="row"><span>กำไร' + ovnMonthFull(M) + ' (FB แอด)</span><b class="pos">' + baht(Math.round(S.fb)) + '</b></div>' +
-        '<div class="row big"><span>กำไรรวมทั้งหมด</span><b class="pos">' + baht(Math.round(grand)) + '</b></div></div>' +
+      '<div class="ovn-p ovn-sum"><div class="ovn-ph"><h2><span class="pico">🧾</span>สรุปกำไรขาดทุน</h2>' + (srcNote ? '<span class="note">' + srcNote + '</span>' : '') + '</div>' +
+        '<div class="row"><span>ยอดขาย' + ovnMonthFull(M) + '</span><b>' + baht(Math.round(salesShown)) + '</b></div>' +
+        '<div class="row"><span>กำไรแลกซื้อ</span><b>' + ((S.sheet && S.sheet.sum.exch != null) ? baht(Math.round(S.sheet.sum.exch)) : '<span class="muted2">รวมในกำไรโทรอัพ</span>') + '</b></div>' +
+        '<div class="row"><span>กำไรโทรอัพ</span><b>' + baht(Math.round(S.tele)) + '</b></div>' +
+        '<div class="row"><span>กำไร' + ovnMonthFull(M) + ' (FB แอด)</span><b>' + baht(Math.round(S.fb)) + '</b></div>' +
+        '<div class="row big"><span>กำไรรวมทั้งหมด</span><b>' + baht(Math.round(grand)) + '</b></div>' +
+        fixed.map(f => '<div class="row fx"><span>' + esc(f.name) + '</span><b class="neg2">− ' + baht(Math.round(f.amount||0)) + '</b></div>').join('') +
+        '<div class="row final"><span>กำไรสุทธิ</span><b class="' + (netProfit < 0 ? 'neg2' : '') + '">' + baht(Math.round(netProfit)) + '</b></div></div>' +
     '</div>' +
     '<div class="ovn-foot"><span>📊 Dashboard กำไรสินค้า เทเล vs แอดมิน · ' + ovnMonthFull(M) + '</span><span>ข้อมูลล่าสุด ' + (last ? thDate(last) : "—") + '</span></div>';
 
