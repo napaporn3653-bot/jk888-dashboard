@@ -3305,6 +3305,11 @@ function renderAdmin(){
 
 /* ================= telesales (TLS) ================= */
 function renderTLS(){
+  /* เดือนที่ยังไม่มีข้อมูลชุดเก่า (so/se/กำไร) ให้ใช้ยอดจากชีทค่าคอมเทเลแทน */
+  if(typeof TELE_TEAM!=="undefined" && TELE_TEAM.months && TELE_TEAM.months[CUR_MONTH] &&
+     (typeof TELE_DATA==="undefined" || !TELE_DATA.days || !TELE_DATA.days.some(x=>String(x.date).slice(0,7)===CUR_MONTH))){
+    renderTLSTeam("tlsBody"); return;
+  }
   if(typeof TELE_DATA!=="undefined" && TELE_DATA.days && !TELE_DATA.days.some(x=>String(x.date).slice(0,7)===CUR_MONTH)){
     $("#tlsBody").innerHTML=`<div class="panel"><div class="panel-b"><div class="empty">ยังไม่มีข้อมูลเทเลเซลส์ของ${monLabel(CUR_MONTH)} — ข้อมูลเทเลที่มีอยู่เป็นของ${monLabel(TELE_DATA.days[0].date.slice(0,7))}</div></div></div>`; return; }
   if(typeof TELE_DATA==="undefined"||!TELE_DATA.days){ $("#tlsBody").innerHTML=`<div class="panel"><div class="panel-b"><div class="empty">ยังไม่มีข้อมูลเทเล</div></div></div>`; return; }
@@ -3359,8 +3364,8 @@ function tlMonthKey(){
   if(TELE_TEAM.months[CUR_MONTH]) return CUR_MONTH;
   return ks[ks.length-1];
 }
-function renderTLSTeam(){
-  const box=$("#tlsTeamBody"); if(!box) return;
+function renderTLSTeam(targetId){
+  const box=document.getElementById(targetId||"tlsTeamBody"); if(!box) return;
   const key=tlMonthKey();
   if(!key){ box.innerHTML='<div class="panel"><div class="panel-b"><div class="empty">ยังไม่มีข้อมูลยอดเทเลรายเดือน</div></div></div>'; return; }
   const M=TELE_TEAM.months[key], T=M.total||{teams:[],total:0}, G=M.grand||T, C=M.carry;
