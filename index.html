@@ -3369,41 +3369,29 @@ function tlMonthKey(){
 function renderTLSDaily(){
   const box=$("#tlsBody"); if(!box) return;
   const M=TELE_TEAM.months[CUR_MONTH];
-  const T=M.total||{total:0,teams:[]}, C=M.carry||{total:0}, G=M.grand||T;
-  const days=(M.days||[]).filter(function(d){return d.total>0;});
-  const maxD=Math.max(1,...days.map(function(d){return d.total;}));
-  const avg=days.length?T.total/days.length:0;
-  const best=days.slice().sort(function(a,b){return b.total-a.total;})[0];
+  const T=M.total||{total:0,teams:[]};
+  const days=(M.days||[]);
   let h='';
-  h+='<div class="cards">'+
-     '<div class="card primary"><div class="lbl">ยอดขายเทเลรวม ('+esc(M.label)+')</div><div class="val">'+baht(T.total)+'</div><div class="foot">จากชีทค่าคอมเทเล</div></div>'+
-     '<div class="card"><div class="ico g1">📅</div><div class="lbl">วันที่มียอด</div><div class="val">'+days.length+' วัน</div><div class="foot">เฉลี่ยวันละ '+baht(avg)+'</div></div>'+
-     '<div class="card"><div class="ico g2">🏆</div><div class="lbl">วันที่ขายดีที่สุด</div><div class="val">'+(best?baht(best.total):'—')+'</div><div class="foot">'+(best?'วันที่ '+best.d:'')+'</div></div>'+
-     '<div class="card"><div class="ico g1">📥</div><div class="lbl">รวมกับยอดยกมา</div><div class="val">'+baht(G.total)+'</div><div class="foot">ยอดยกมา '+baht(C.total)+'</div></div>'+
-     '</div>';
-  h+='<div class="panel"><div class="panel-h"><h2>ยอดขายเทเลเซลส์ รายวัน</h2><span class="note">'+esc(M.label)+' · กราฟแท่งคือยอดแต่ละวัน</span></div><div class="panel-b">'+
-     '<div class="tl-days">';
-  (M.days||[]).forEach(function(d){ h+='<div class="'+(d.total?'':'off')+'" style="height:'+(d.total?Math.max(3,d.total/maxD*100):3).toFixed(1)+'%" title="'+d.d+' · '+baht(d.total)+'"></div>'; });
-  h+='</div><div class="tl-dlbl">';
-  (M.days||[]).forEach(function(d){ h+='<div>'+(d.d%5===0||d.d===1?d.d:'')+'</div>'; });
-  h+='</div></div></div>';
-  h+='<div class="panel"><div class="panel-h"><h2>ยอดขายรายวัน แยกทีม</h2><span class="note">กำไรรายวันยังไม่มีข้อมูลของเดือนนี้</span></div>'+
+  h+='<div class="panel"><div class="panel-h"><h2>ยอดขายเทเลเซลส์ รายวัน</h2>'+
+     '<span class="note">'+esc(M.label)+' · ยอดขายจากชีทค่าคอมเทเล</span></div>'+
      '<div class="tablewrap"><table class="rpt"><thead><tr><th>วันที่</th>';
   T.teams.forEach(function(t){ h+='<th>'+esc(t.name)+'</th>'; });
-  h+='<th>ยอดขายรวมวัน</th><th>กำไรวันนั้น</th></tr></thead><tbody>';
-  (M.days||[]).forEach(function(d){
-    h+='<tr><td>'+d.d+'</td>';
+  h+='<th>ยอดขายเทเลวันนั้น</th><th>กำไรสินค้าที่เทเลโทร</th><th>มาร์จิ้น</th></tr></thead><tbody>';
+  days.forEach(function(d){
+    h+='<tr><td>'+thDate(CUR_MONTH+'-'+String(d.d).padStart(2,'0'))+'</td>';
     d.teams.forEach(function(t){ h+='<td>'+(t.total?baht(t.total):'<span class="muted">—</span>')+'</td>'; });
     h+='<td><b>'+(d.total?baht(d.total):'<span class="muted">—</span>')+'</b></td>'+
-       '<td><span class="muted" title="ยังไม่มีข้อมูลต้นทุนรายวันของเดือนนี้">—</span></td></tr>';
+       '<td><span class="muted" title="ยังไม่มีข้อมูลต้นทุนรายวันของเดือนนี้">—</span></td>'+
+       '<td><span class="muted">—</span></td></tr>';
   });
   h+='</tbody><tfoot><tr class="adm-tot"><td>รวม</td>';
   T.teams.forEach(function(t){ h+='<td>'+baht(t.total)+'</td>'; });
-  h+='<td>'+baht(T.total)+'</td><td><span class="muted">—</span></td></tr></tfoot></table></div></div>';
-  h+='<div class="panel"><div class="panel-b"><div class="note">ยอดขายรวมทั้งเดือนแยกรายคน ดูได้ที่เมนูย่อย <b>ยอดขายรายเดือน (ทีม/รายคน)</b></div></div></div>';
+  h+='<td>'+baht(T.total)+'</td><td><span class="muted">—</span></td><td><span class="muted">—</span></td></tr></tfoot></table></div></div>';
+  h+='<div class="panel"><div class="panel-h"><h2>กำไรเทเล แยกตามสินค้า</h2></div>'+
+     '<div class="panel-b"><div class="empty">ยังไม่มีข้อมูลต้นทุน/กำไรของสินค้าที่เทเลโทรในเดือนนี้'+
+     '<br><span class="note">ชีทค่าคอมเทเลมีแต่ยอดขาย ไม่มีต้นทุนรายวัน</span></div></div></div>';
   box.innerHTML=h;
 }
-
 function renderTLSTeam(targetId){
   const box=document.getElementById(targetId||"tlsTeamBody"); if(!box) return;
   const key=tlMonthKey();
